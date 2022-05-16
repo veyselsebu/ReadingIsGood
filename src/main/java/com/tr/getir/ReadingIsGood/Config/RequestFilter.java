@@ -3,6 +3,7 @@ package com.tr.getir.ReadingIsGood.Config;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.Locale;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -52,20 +53,21 @@ public class RequestFilter extends OncePerRequestFilter {
                 request.getMethod(), request.getRequestURI(), requestBody, response.getStatus(), responseBody,
                 timeTaken);
 
-        SystemRequestLog systemRequestLog = new SystemRequestLog();
-        systemRequestLog.setRequestDate(new Date(startTime));
-        systemRequestLog.setRequest(requestBody);
-        systemRequestLog.setRequestUri(request.getRequestURI());
-        systemRequestLog.setResponse(responseBody);
-        systemRequestLog.setStatus(response.getStatus());
-        systemRequestLog.setRemoteAddress(request.getRemoteAddr());
+        if (request.getRequestURI().toUpperCase().indexOf("SWAGGER") == -1 && ! request.getRequestURI().equals("/v2/api-docs")) {
+            SystemRequestLog systemRequestLog = new SystemRequestLog();
+            systemRequestLog.setRequestDate(new Date(startTime));
+            systemRequestLog.setRequest(requestBody);
+            systemRequestLog.setRequestUri(request.getRequestURI());
+            systemRequestLog.setResponse(responseBody);
+            systemRequestLog.setStatus(response.getStatus());
+            systemRequestLog.setRemoteAddress(request.getRemoteAddr());
 
-        if (request.getHeader(HttpHeaders.AUTHORIZATION) != null && !(request.getHeader(HttpHeaders.AUTHORIZATION).equals(""))){
-            systemRequestLog.setUser(userService.getTokenToUser(request));
+            if (request.getHeader(HttpHeaders.AUTHORIZATION) != null && !(request.getHeader(HttpHeaders.AUTHORIZATION).equals(""))) {
+                systemRequestLog.setUser(userService.getTokenToUser(request));
+            }
+
+            systemRequestLogService.addLog(systemRequestLog);
         }
-
-        systemRequestLogService.addLog(systemRequestLog);
-
 
         responseWrapper.copyBodyToResponse();
     }
