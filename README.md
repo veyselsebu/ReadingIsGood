@@ -11,9 +11,9 @@
 
   ***** Senaryo Dışı Eklentiler ****
   
-    ** Senaryoya iki kullanıcı aynı anda stoktaki son ürünü almaya çalışırsa engellenmesi için Sepet özlliği ekledim. Şipariş vemeden önce kullıcı ürünü sepete eklemeli daha sonrasında order controller kullanılarak sepet onaylanmalı.
+    ** Senaryoya iki kullanıcı aynı anda stoktaki son ürünü almaya çalışırsa engellenmesi için Sepet özlliği ekledim. Şipariş vemeden önce kullanıcı ürünü sepete eklemeli daha sonrasında order controller kullanılarak sepet onaylanmalı.
     ** Müşetirlerin sepeti onaylıyabilmesi için userAdressController kullanılarak sisteme adres kaydı gereçekleştirmesi gerekmekte.
-    ** Sepetteki ürünler 15 dakika içerisinde satın alınmaz ise sistem sepetten kaldırır.(@Schudle kulanıldı)
+    ** Sepetteki ürünler 15 dakika içerisinde satın alınmaz ise sistem sepetten kaldırır.(@Schedule kulanıldı)
 
 
   *****Admin yetkisindeki end pointler****
